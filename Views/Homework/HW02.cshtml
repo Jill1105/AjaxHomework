@@ -13,6 +13,7 @@
                 <label for="userName" class="form-label">姓名：</label>
                 <input type="text" class="form-control" id="userName" name="Name">
             </div>
+            <div class="text" id="div1"></div>
             <div class="mb-3">
                 <label for="UserEmail" class="form-label">電子郵件：</label>
                 <input type="email" class="form-control" id="UserEmail" name="Email">
@@ -24,7 +25,7 @@
 
             <button id="button1" type="submit" class="btn btn-primary">送出</button>
         </form>
-        <div class="alert alert-info" id="div1"></div>
+       
     </div>
     <div class="col-3">
     </div>
@@ -32,7 +33,33 @@
 
 @section Scripts {
     <script>
+        const Name = document.querySelector('#userName');
+        const Email = document.querySelector('#UserEmail');
+        const Age = document.querySelector('#userAge');
+        const button1 = document.querySelector('#button1');
+        const div1 = document.querySelector('#div1');
+        let nameinput;
 
+        Name.addEventListener('keyup', async(event) => {
+            nameinput = event.target.value;
+            console.log(nameinput);
+
+            const respones = await fetch(`@Url.Content("~/api/checkaccount")?Name=${nameinput}`);
+            if (!respones.ok) throw new Error(respones.status);
+
+            const datas = await respones.text();
+            console.log(datas);
+            console.log(typeof (datas));
+
+            if (datas == "False") {
+                div1.innerHTML = "此帳號可以使用";
+                div1.style.color = "blue";
+            } else if (datas == "True") {
+                div1.innerHTML = "帳號已存在";
+                div1.style.color = "red";
+            }
+
+        });
 
     </script>
 }

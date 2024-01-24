@@ -1,5 +1,6 @@
 ﻿using AjaxHomework.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AjaxHomework.Controllers
 {
@@ -19,9 +20,8 @@ namespace AjaxHomework.Controllers
 
         public IActionResult CheckAccount(string name)
         {
-            Member member = _dbContext.Members.FirstOrDefault(a => a.Name == name);
-            if (member == null) return Json(false);
-            return Json(true);
+            var account = _dbContext.Members.Where(x => x.Name == name).Any();
+            return Content($"{account}");
         }
     }
 }
