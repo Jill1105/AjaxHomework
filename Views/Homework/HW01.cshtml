@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "HW01";
+}
+
+<h1>HW01</h1>
+
+<div id="card">
+</div>
+
+@section Scripts {
+    <script src="~/js/travel.js"></script>
+    <script>
+        // const jsonfile = JSON.stringify(spots);
+        // console.log(jsonfile);
+        // const haha = JSON.parse(jsonfile);
+
+        const sections = spots.CommonFormat.Section;
+
+        const cardcontainer = document.querySelector("#card");
+
+        const htmlcontext = sections.map((section) => {
+            let { stitle, CAT2, xurl, file, address, info, MRT } = section;
+            let imgUrl = file.img[0] ? file.img[0].text : "";
+            // let imgUrl2 = file.img[0] ? file.img[0][@@description] : "";
+
+            return `
+                                    <div class="col">
+                                        <div class="card h-100">
+                                                        <img src="${imgUrl}" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${stitle}</h5>
+                                                <p class="card-text">${CAT2}</p>
+                                                <a href="${xurl}" class="btn btn-primary">連結</a>
+                                            </div>
+                                                <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">${address}</li>
+                                                <li class="list-group-item">${info}</li>
+                                                <li class="list-group-item">捷運站:${MRT}</li>
+                                              </ul>
+                                        </div>
+                                    </div>`;
+        }).join('');
+
+        let node = document.createElement("div");
+        node.classList.add('row', 'row-cols-2', 'row-cols-md-4', 'g-4');
+        node.innerHTML = htmlcontext;
+        cardcontainer.append(node);
+
+    </script>
+}
+
