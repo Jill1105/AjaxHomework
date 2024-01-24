@@ -21,7 +21,7 @@
 
         const htmlcontext = sections.map((section) => {
             let { stitle, CAT2, xurl, file, address, info, MRT } = section;
-            let imgUrl = file.img[0] ? file.img[0].text : "";
+            let imgUrl = file.img[0] ? file.img[0].text : file.img.text;
             // let imgUrl2 = file.img[0] ? file.img[0][@@description] : "";
 
             return `
